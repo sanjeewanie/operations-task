@@ -21,7 +21,9 @@ ENV PATH="/home/worker/.local/bin:${PATH}"
 RUN  pip install --user gunicorn 
 COPY --chown=worker:worker . .
 
+
 # Open port 3000 for serving the webpage
+
 
 EXPOSE 3000 
 
