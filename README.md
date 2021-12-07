@@ -22,7 +22,8 @@ Run the Docker image to make application server up with Gunicorn master node and
  ```
  
  
- Here we have used Docker , git , shell scripting to IaaC..
+ ### You can test the application envirenment is up and runnnig using below command   
+ curl "http://localhost:3000"
  
 
 
