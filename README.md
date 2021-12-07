@@ -7,7 +7,7 @@
   git clone https://github.com/sanjeewanie/operations-task.git
   ```
   
-Make sure your developemnt envirentment have below apllications up and running.
+Make sure your developemnt envirentment have below aplications up and running.
   * Docker
   * Git
   
