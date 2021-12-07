@@ -27,6 +27,3 @@ Run the Docker image to make application server up with Gunicorn master node and
  
 
 
-  
-  
-
