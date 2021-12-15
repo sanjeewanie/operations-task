@@ -27,7 +27,7 @@ COPY --chown=worker:worker . .
 
 EXPOSE 3000 
 
-CMD ["gunicorn" , "--bind", "localhost:3000" , "wsgi"]
+CMD ["gunicorn" , "--bind", "0.0.0.0:3000" , "wsgi"]
 
 
 
