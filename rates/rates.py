@@ -37,9 +37,17 @@ def create_app():
     def get_rows(query, params=None):
         """Get all rows from a database query"""
         cur = get_cursor()
-        cur.execute(query, params)
-        rows = cur.fetchall()
-        return rows
+        print(query)
+        try:
+            cur.execute(query, params)
+            cur.commit()           
+            rows = cur.fetchall()
+            print(rows)
+            return rows
+
+        except Exception:          
+            return None
+        
 
     def aggregate_to_dto(row):
         """Transform a database dict row into a json serializable dict."""
@@ -86,10 +94,14 @@ def create_app():
     def get_rates_using_codes(date_from, date_to, orig_code, dest_code):
         rows = get_rows(
             (
-                """SELECT
-                    CASE WHEN a.count < 3 THEN null ELSE a.price END AS price,
-                    d.day,
-                    a.count
+            """SELECT
+	                CASE 
+                        WHEN (a.count < 3) THEN NULL 
+                    ELSE 
+                        a.price  
+                    END	AS price,
+	                d.day,
+	                a.count
                 FROM
                 (
                     SELECT (
@@ -108,7 +120,7 @@ def create_app():
                         day <= %(date_to)s
                     GROUP BY day, orig_code, dest_code
                 ) AS a ON d.day = a.day
-                ORDER BY day DESC"""
+                ORDER BY day DESC;"""
             ),
             {
                 "date_from": date_from,
@@ -117,8 +129,10 @@ def create_app():
                 "dest_code": dest_code
             }
         )
-
-        rates = [aggregate_to_dto(row) for row in rows]
-        return jsonify({"rates": rates})
+        if(rows!=None):
+            rates = [aggregate_to_dto(row) for row in rows]
+            return jsonify({"rates": rates})
+        else:
+            return 'None'    
 
     return app
